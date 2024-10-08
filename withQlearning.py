@@ -4,17 +4,17 @@ np.random.seed(0)
 
 # Parameters
 T = 10  # Time steps
-n_agents = 100  # Number of agents
+n_agents = 90  # Number of agents
 income_mean = 100  # Mean income for agents
 income_std = 10  # Income variability
-beta = 0.9  # Impatience factor
+beta = 1  # Impatience factor
 initial_wealth = 0
 marg_consumption = 0.5
 
 
 investment_options = {
-    "cash": {"mean": 0.1, "std": 0.10},  # Safe but low return
-    "etf": {"mean": 0.2, "std": 0.5},    # Medium risk, medium return
+    "cash": {"mean": 0.1, "std": 0.3},  # Safe but low return
+    "etf": {"mean": 0.2, "std": 0.1},    # Medium risk, medium return
     "stocks": {"mean": 0.30, "std": 0.20}    # High risk, high return
 }
 
@@ -66,7 +66,7 @@ class Agent:
         
         base_utility = (consumption ** alpha) + beta * (wealth ** alpha)
         option_risk = investment_options[option]["std"]
-
+        
         penalty = 0
         if option_risk > risk_tolerance:
             penalty = (option_risk - risk_tolerance) * (consumption ** alpha)
@@ -116,7 +116,7 @@ total_agents_per_type_exploration = {
 
 ### Start Simulation
 for id in range(n_agents):
-    risk_type = np.random.choice(list(agents.keys()))
+    risk_type = np.random.choice(list(agents.keys())) ### let's
 
     len_averse += (risk_type == 'risk_averse')
     len_neutral += (risk_type == 'risk_neutral')
@@ -198,7 +198,7 @@ axs[2].legend()
 axs[2].ticklabel_format(axis = 'y',style = 'plain')
 
 plt.tight_layout()
-plt.show()
+plt.savefig('/Users/agustinafarias/Documents/3. MBR/Simulations/multi_arm_bandit/figure_1.png')
 
 
 
@@ -236,7 +236,7 @@ selection_percentages = {
 }
 
 # Plot the percentage of selections over time
-fig, axs = plt.subplots(3, 3, figsize=(20, 15), sharex=True, sharey=True)
+fig, axs = plt.subplots(3, 3, figsize=(15, 15), sharex=True, sharey=True)
 agent_types = list(agents.keys())
 exploration_rates = [0.01, 0.5, 0.9]
 
@@ -253,4 +253,4 @@ for i, risk_type in enumerate(agent_types):
         axs[i, j].legend()
 
 plt.tight_layout()
-plt.show()
+plt.savefig('/Users/agustinafarias/Documents/3. MBR/Simulations/multi_arm_bandit/figure_3.png')
