@@ -42,7 +42,7 @@ class Agent:
         # Exploration/Exploitation
         if np.random.rand() < exploration_rate:  # Explore or exploit? 
             self.option = np.random.choice(list(investment_options.keys()))
-        else: ### If penalty is >0 then explore a random option.
+        else: 
             if self.counter == 0: # Exploit - For the first period, choose randomly
                 self.option = np.random.choice(list(investment_options.keys()))
             else:  # Exploit - for t > 0, choose the option with the highest Q-value
