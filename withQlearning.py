@@ -142,8 +142,6 @@ for id in range(n_agents):
 
         for t in range(T):
             wealth, period_wealth, chosen_return = agent.decide(income, cumwealth, exploration_rate)
-            print(id, t, exploration_rate, wealth, period_wealth, income, chosen_return, risk_type)
-
             cumwealth += period_wealth
             option = agent.option
             utility = agent.utility(cumwealth, chosen_return, option)
