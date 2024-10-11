@@ -4,8 +4,8 @@ import os
 np.random.seed(0)
 
 # Parameters
-T = 100  # Time steps
-n_agents = 90  # Number of agents
+T = 250  # Time steps
+n_agents = 500  # Number of agents
 income_mean = 100  # Mean income for agents
 income_std = 10  # Income variability
 beta = 1  # Impatience factor
@@ -13,15 +13,15 @@ initial_wealth = 0
 marg_consumption = 0.5
 
 investment_options = {
-    "cash": {"mean": 0.05, "std": 0.05},  # Safe but low return
+    "cash": {"mean": 0.05, "std": 0.025},  # Safe but low return
     "etf": {"mean": 0.2, "std": 0.1},    # Medium risk, medium return
-    "stocks": {"mean": 0.30, "std": 0.15}    # High risk, high return
+    "stocks": {"mean": 0.3, "std": 0.15}    # High risk, high return
 }
 
 agents = {
-    "risk_averse": {"alpha": 0.5, "risk_tolerance": 0.05},  # Concave utility, low tolerance for risk
-    "risk_neutral": {"alpha": 1.0, "risk_tolerance": 0.07}, # Linear utility, moderate tolerance for risk
-    "risk_seeking": {"alpha": 1.5, "risk_tolerance": 0.1}  # Convex utility, high tolerance for risk
+    "risk_averse": {"alpha": 0.5, "risk_tolerance": 0.03},  # Concave utility, low tolerance for risk
+    "risk_neutral": {"alpha": 1.0, "risk_tolerance": 0.11}, # Linear utility, moderate tolerance for risk
+    "risk_seeking": {"alpha": 1.5, "risk_tolerance": 0.16}  # Convex utility, high tolerance for risk
 }
 
 class Agent:
@@ -78,7 +78,7 @@ class Agent:
         
         penalty = 0
         if option_risk > risk_tolerance:
-            penalty = abs(chosen_return - risk_tolerance) * (consumption ** alpha)
+            penalty = (income_mean ** alpha)
 
         return base_utility - penalty
 
@@ -89,13 +89,8 @@ class Agent:
 
 
 
-
-
-
-
-
 # Run simulation
-exploration_factors = [0.01, 0.5, 0.9]
+exploration_factors = [0.1, 0.5, 0.9]
 
 results_risk_averse = [[[np.nan for _ in range(T)] for _ in range(len(exploration_factors))] for _ in range(n_agents)]
 results_risk_neutral = [[[np.nan for _ in range(T)] for _ in range(len(exploration_factors))] for _ in range(n_agents)]
@@ -203,7 +198,7 @@ axs[2].legend()
 axs[2].ticklabel_format(axis = 'y',style = 'plain')
 
 plt.tight_layout()
-plt.savefig('/Users/agustinafarias/Documents/3. MBR/Simulations/multi_arm_bandit/figure_1.png')
+plt.savefig('figure_1.png')
 plt.show()
 
 
@@ -258,7 +253,7 @@ for i, risk_type in enumerate(agent_types):
         axs[i, j].legend()
 
 plt.tight_layout()
-plt.savefig('/Users/agustinafarias/Documents/3. MBR/Simulations/multi_arm_bandit/figure_3.png')
+plt.savefig('figure_3.png')
 plt.show()
 
 
